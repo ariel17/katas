@@ -1,8 +1,10 @@
 package main
 
 import (
+	"errors"
 	"fmt"
 	"io/ioutil"
+	"math"
 	"os"
 	"strconv"
 	"strings"
@@ -11,6 +13,11 @@ import (
 type data struct {
 	Day int
 	Min float32
+	Max float32
+}
+
+func (d data) Diff() float32 {
+	return d.Max-d.Min
 }
 
 func main() {
@@ -21,9 +28,8 @@ func main() {
 	if len(content) == 0 {
 		fmt.Println("File is empty.")
 	}
-	for _, d := range content {
-		fmt.Printf("* Day: %d, Min: %.2f\n", d.Day, d.Min)
-	}
+	min := smallestSpread(content)
+	fmt.Printf("* Day: %d, Min: %.2f, Max: %.2f, Spread: %.2f", min.Day, min.Min, min.Max, min.Diff())
 }
 
 func loadData(filePath string) ([]data, error) {
@@ -56,6 +62,12 @@ func loadData(filePath string) ([]data, error) {
 			return nil, err
 		}
 
+		rawMax := strings.Replace(parsed[1], "*", "", -1)
+		max, err := strconv.ParseFloat(rawMax, 32)
+		if err != nil {
+			return nil, err
+		}
+
 		rawMin := strings.Replace(parsed[2], "*", "", -1)
 		min, err := strconv.ParseFloat(rawMin, 32)
 		if err != nil {
@@ -65,8 +77,27 @@ func loadData(filePath string) ([]data, error) {
 		parsedContent = append(parsedContent, data{
 			Day: day,
 			Min: float32(min),
+			Max: float32(max),
 		})
 	}
 
 	return parsedContent, nil
+}
+
+func smallestSpread(d []data) data {
+	if len(d) == 0 {
+		panic(errors.New("weather data cannot be empty"))
+	}
+	var (
+		min data
+		v = float32(math.MaxFloat32)
+	)
+	for _, day := range d {
+		diff := day.Diff()
+		if diff < v {
+			v = diff
+			min = day
+		}
+	}
+	return min
 }
