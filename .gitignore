@@ -126,3 +126,5 @@ venv.bak/
 # mypy
 .mypy_cache/
 
+# Kata#05 IntelliJ
+codekata.com/kata05-bloom-filters/.idea/
