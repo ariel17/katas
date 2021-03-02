@@ -35,3 +35,15 @@ func TestLoadBooks(t *testing.T) {
 		})
 	}
 }
+
+func TestBook_Print(t *testing.T) {
+	b := Book{
+		Publication: Publication{
+			Title: "Title",
+			ISBN: "111-222-333",
+			Authors: []string{"Me", "Me Too"},
+		},
+		Description: "A description",
+	}
+	assert.Equal(t, "Title\t111-222-333\tMe, Me Too\tA description", b.Print())
+}

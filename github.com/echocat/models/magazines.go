@@ -1,14 +1,20 @@
 package models
 
 import (
+	"fmt"
 	"strings"
 	"time"
+
 	"github.com/ariel17/katas/github.com/echocat/files"
 )
 
 type Magazine struct {
 	Publication
 	PublishedAt time.Time
+}
+
+func (m Magazine) Print() string {
+	return fmt.Sprintf("%s\t%s", m.Publication.Print(), m.PublishedAt.Format("2006-03-02"))
 }
 
 func LoadMagazines(path string) ([]Magazine, error) {

@@ -2,13 +2,18 @@ package models
 
 import (
 	"strings"
+
 	"github.com/ariel17/katas/github.com/echocat/files"
 )
 
 type Author struct {
-	Email string
+	Email     string
 	FirstName string
-	LastName string
+	LastName  string
+}
+
+func (a Author) Print() string {
+	return ""
 }
 
 func LoadAuthors(path string) ([]Author, error) {
@@ -26,8 +31,8 @@ func LoadAuthors(path string) ([]Author, error) {
 func parseAuthor(line string) Author {
 	fields := strings.Split(line, ";")
 	return Author{
-		Email: fields[0],
+		Email:     fields[0],
 		FirstName: fields[1],
-		LastName: fields[2],
+		LastName:  fields[2],
 	}
 }

@@ -2,15 +2,16 @@ package models
 
 import (
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestLoadMagazines(t *testing.T) {
-	testCases := []struct{
-		name string
-		path string
-		isSuccessful bool
+	testCases := []struct {
+		name              string
+		path              string
+		isSuccessful      bool
 		expectedMagazines int
 	}{
 		{"ok", "../magazines.csv", true, 6},
@@ -34,4 +35,17 @@ func TestLoadMagazines(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestMagazine_Print(t *testing.T) {
+	date, _ := time.Parse("02.03.2006", "25.02.2020")
+	m := Magazine{
+		Publication: Publication{
+			Title: "Title",
+			ISBN: "111-222-333",
+			Authors: []string{"Me", "Me Too"},
+		},
+		PublishedAt: date,
+	}
+	assert.Equal(t, "Title\t111-222-333\tMe, Me Too\t2020-02-25", m.Print())
 }

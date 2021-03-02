@@ -7,10 +7,10 @@ import (
 )
 
 func TestLoadContent(t *testing.T) {
-	testCases := []struct{
-		name string
-		path string
-		isSuccessful bool
+	testCases := []struct {
+		name          string
+		path          string
+		isSuccessful  bool
 		expectedLines int
 	}{
 		{"ok", "../magazines.csv", true, 6},

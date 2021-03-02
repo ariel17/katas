@@ -1,13 +1,19 @@
 package models
 
 import (
+	"fmt"
 	"strings"
+
 	"github.com/ariel17/katas/github.com/echocat/files"
 )
 
 type Book struct {
 	Publication
 	Description string
+}
+
+func (b Book) Print() string {
+	return fmt.Sprintf("%s\t%s", b.Publication.Print(), b.Description)
 }
 
 func LoadBooks(path string) ([]Book, error) {

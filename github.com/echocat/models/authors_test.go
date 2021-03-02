@@ -7,10 +7,10 @@ import (
 )
 
 func TestLoadAuthors(t *testing.T) {
-	testCases := []struct{
-		name string
-		path string
-		isSuccessful bool
+	testCases := []struct {
+		name            string
+		path            string
+		isSuccessful    bool
 		expectedAuthors int
 	}{
 		{"ok", "../authors.csv", true, 6},
